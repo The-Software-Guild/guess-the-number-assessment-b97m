@@ -10,11 +10,19 @@ import java.time.LocalDateTime;
  * date: Aug 18, 2021
  */
 public class Round {
+    private int roundId;
     private String guess;
     private int exactMatches;
     private int partialMatches;
-
     private LocalDateTime timeOfGuess;
+
+    public int getRoundId() {
+	return roundId;
+    }
+
+    public void setRoundId(int roundId) {
+	this.roundId = roundId;
+    }
 
     public String getGuess() {
 	return guess;
@@ -22,6 +30,10 @@ public class Round {
 
     public void setGuess(String guess) {
 	this.guess = guess;
+    }
+
+    public String getResult() {
+	return String.format("e:%dp:%d", exactMatches, partialMatches);
     }
 
     public int getExactMatches() {

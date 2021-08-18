@@ -41,8 +41,17 @@ public interface GameDao {
      * Otherwise, an empty instance will be returned
      * 
      * @param gameToInsert
-     * @return The inserted game with its ID set to the
-     *         game represented in the collection 
+     * @return The aforementioned instance
      */
     public Optional<Game> addGame(Game gameToInsert);
+
+    /**
+     * Attempts to mark the game with the indicated id
+     * as finished. The value returned depends on the success
+     * of this marking process 
+     * 
+     * @param gameId
+     * @return The aforementioned value
+     */
+    public boolean markGameFinished(int gameId);
 }

@@ -15,6 +15,8 @@ public class Game {
     private String answer;	
     private List<Round> rounds;
     
+    public static final String ANSWER_HIDDEN = "(Answer Hidden)";
+
     public int getGameId() {
 	return gameId;
     }
@@ -32,10 +34,7 @@ public class Game {
     }
 
     public String getAnswer() {
-	if (inProgress) {
-	    return "(answer hidden)";
-	}
-	return answer;
+    	return answer;
     }
 
     public void setAnswer(String answer) {
