@@ -1,6 +1,6 @@
-package com.bm.numberrestservice.dao;
+package com.bm.guessthenumber.dao;
 
-import com.bm.numberrestservice.dto.Game;
+import com.bm.guessthenumber.dto.Game;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

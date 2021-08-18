@@ -1,8 +1,8 @@
-package com.bm.numberrestservice.controller;
+package com.bm.guessthenumber.controller;
 
-import com.bm.numberrestservice.dto.Game;
-import com.bm.numberrestservice.dto.Round;
-import com.bm.numberrestservice.service.Service;
+import com.bm.guessthenumber.dto.Game;
+import com.bm.guessthenumber.dto.Round;
+import com.bm.guessthenumber.service.Service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

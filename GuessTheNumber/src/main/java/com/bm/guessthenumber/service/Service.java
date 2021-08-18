@@ -1,8 +1,8 @@
-package com.bm.numberrestservice.service;
+package com.bm.guessthenumber.service;
 
-import com.bm.numberrestservice.dao.GameDao;
-import com.bm.numberrestservice.dto.Game;
-import com.bm.numberrestservice.dto.Round;
+import com.bm.guessthenumber.dao.GameDao;
+import com.bm.guessthenumber.dto.Game;
+import com.bm.guessthenumber.dto.Round;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

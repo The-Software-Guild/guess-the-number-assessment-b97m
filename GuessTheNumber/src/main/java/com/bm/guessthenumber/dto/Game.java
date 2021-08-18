@@ -1,4 +1,4 @@
-package com.bm.numberrestservice.dto;
+package com.bm.guessthenumber.dto;
 
 import java.util.List;
 

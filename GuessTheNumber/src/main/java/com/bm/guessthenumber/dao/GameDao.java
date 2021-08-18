@@ -1,6 +1,6 @@
-package com.bm.numberrestservice.dao;
+package com.bm.guessthenumber.dao;
 
-import com.bm.numberrestservice.dto.Game;
+import com.bm.guessthenumber.dto.Game;
 import java.util.List;
 import java.util.Optional;
 
