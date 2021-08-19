@@ -196,4 +196,15 @@ public class Service {
 
 	return generatedAnswer;
     }
+
+    /**
+     * Attempts to delete all data for the rounds and games 
+     * The value returns depends on the success of the 
+     * deletion
+     * 
+     * @return The aforementioned value
+     */
+    public boolean clearData() {
+	return roundDao.clearRounds() && gameDao.clearGames();
+    } 
 }
