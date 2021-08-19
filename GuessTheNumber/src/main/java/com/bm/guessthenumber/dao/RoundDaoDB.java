@@ -4,9 +4,9 @@ import com.bm.guessthenumber.dto.Round;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
-import javax.sql.RowSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +33,10 @@ public class RoundDaoDB implements RoundDao {
     @Override
     public Optional<Round> makeRoundForGameId(Round roundToInsert, int gameId) {
 	Optional<Round> receivedInstance;
-	if (roundToInsert == null) {
+	if (roundToInsert == null 
+	    || roundToInsert.getGuess() == null
+	    || roundToInsert.getTimeOfGuess() == null) {
+
 	    receivedInstance = Optional.empty();
 	} else {
 	    try {
@@ -41,14 +44,15 @@ public class RoundDaoDB implements RoundDao {
 		int rowsUpdated = jdbc.update(
 		    (Connection conn) -> {
 			PreparedStatement statement = conn.prepareStatement(
-			    "INSERT INTO round (gameId, guess, exactMatches, partialMatches)"
-			    + " VALUES (?, ?, ?, ?)",
+			    "INSERT INTO round (gameId, guess, exactMatches, partialMatches, timeOfGuess)"
+			    + " VALUES (?, ?, ?, ?, ?)",
 			    Statement.RETURN_GENERATED_KEYS
 			);
 			statement.setInt(1, gameId);
 			statement.setString(2, roundToInsert.getGuess());
 			statement.setInt(3, roundToInsert.getExactMatches());
 			statement.setInt(4, roundToInsert.getPartialMatches());
+			statement.setTimestamp(5, Timestamp.valueOf(roundToInsert.getTimeOfGuess()));
 			return statement;
 		    }, 
 		    keyHolder
@@ -64,5 +68,15 @@ public class RoundDaoDB implements RoundDao {
 	    }
 	}
 	return receivedInstance;
+    }
+
+    @Override
+    public boolean clearRounds() {
+	try {
+	    jdbc.update("DELETE FROM round;");
+	    return true;
+	} catch (DataAccessException ex) {
+	    return false;
+	}
     }
 }

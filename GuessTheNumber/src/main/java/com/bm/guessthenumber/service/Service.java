@@ -31,15 +31,12 @@ public class Service {
     }
     
     /**
-     * Attempt to generate a new game and add it to the collection
+     * Generate a new game and attempt to add it to the collection
+     * If the insertion fails, then null will be returned.
      * 
-     * If this succeeds, an instance of the generated game is returned
-     * 
-     * Otherwise, an empty instance is returned
-     * 
-     * @return The aforementioned instance
+     * @return The aforementioend game
      */
-    public Optional<Game> generateGame() {
+    public Game generateGame() {
     	Game newGame = new Game();
 	newGame.setInProgress(true);
 	newGame.setRounds(new LinkedList<Round>());
@@ -50,8 +47,9 @@ public class Service {
     /**
      * Processes a guess for a given game
      * 
-     * If the game exists and the guess is non-null, then an
-     * instance containing the appropriate Round will be returned
+     * If the game exists and the guess is non-null, 
+     * then an instance containing the appropriate Round will be 
+     * returned
      * 
      * Otherwise, an empty instance will be returned
      * 
@@ -82,7 +80,7 @@ public class Service {
 	    }	
 	}
 
-	if (exactMatches == answer.length()) {
+	if (exactMatches == answer.length() && partialMatches == 0) {
 	    gameDao.markGameFinished(gameId);
 	}
 

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,10 +83,10 @@ public class GameDaoDB implements GameDao {
     }
 
     @Override
-    public Optional<Game> addGame(Game gameToInsert) {
-	Optional<Game> receivedInstance;
-	if (gameToInsert == null) {
-	    receivedInstance = Optional.empty();
+    public Game addGame(Game gameToInsert) {
+	Game receivedGame;
+	if (gameToInsert == null || gameToInsert.getAnswer() == null) {
+	    receivedGame = null;
 	} else {
 	    GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 	    int rowsUpdated = jdbc.update(
@@ -102,12 +103,14 @@ public class GameDaoDB implements GameDao {
 
 	    if (rowsUpdated > 0) {
 		gameToInsert.setGameId(keyHolder.getKey().intValue());
-		receivedInstance = Optional.of(gameToInsert);
+		gameToInsert.setInProgress(true);
+		gameToInsert.setRounds(new LinkedList<>());
+		receivedGame = gameToInsert;
 	    } else {
-		receivedInstance = Optional.empty();
+		receivedGame = null;
 	    }
 	}
-	return receivedInstance;
+	return receivedGame;
     }
 
     private void occupyRoundListForGame(Game gameToOccupy) {
@@ -123,10 +126,22 @@ public class GameDaoDB implements GameDao {
 
     @Override
     public boolean markGameFinished(int gameId) {
-	int roundsUpdated = jdbc.update(
+	int rowsUpdated = jdbc.update(
 	    "UPDATE game SET inProgress = False WHERE gameId = ?",
 	    gameId
 	);
-	return roundsUpdated > 0;
+	return rowsUpdated > 0;
+    }
+
+    @Override
+    public boolean clearGames() {
+	try {
+	    int rowsUpdated = jdbc.update(
+		"DELETE FROM game;"
+	    ); 
+	    return true;
+	} catch (DataAccessException ex) {
+	    return false;
+	}
     }
 }

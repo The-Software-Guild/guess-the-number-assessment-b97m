@@ -35,22 +35,14 @@ public class Controller {
     }
 
     @PostMapping("begin")
-    public ResponseEntity<Game> createGame() {
-	Optional<Game> possGame = service.generateGame();
-	if (possGame.isPresent()) {
-	    Game game = service.adjustedVersionOfGame(possGame.get());
-	    return new ResponseEntity(game, HttpStatus.CREATED);
-	} else {
-	    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-	}	
+    @ResponseStatus(HttpStatus.CREATED)
+    public int createGame() {
+	return service.generateGame().getGameId(); 
     }
 
     @PostMapping("guess")
     @ResponseStatus(HttpStatus.OK)
     public Round makeGuess(@RequestBody Guess guess) {
-	System.out.format("gameId: %d%n", guess.getGameId());
-	System.out.format(" guess: %s%n", guess.getGuess());
-
     	Optional<Round> possRound = service.processGuess(
 	    guess.getGameId(), 
 	    guess.getGuess()

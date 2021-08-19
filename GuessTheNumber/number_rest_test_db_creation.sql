@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS numberGuessDB;
-CREATE SCHEMA numberGuessDB;
-USE numberGuessDB;
+DROP SCHEMA IF EXISTS numberGuessTestDB;
+CREATE SCHEMA numberGuessTestDB;
+USE numberGuessTestDB;
 
 CREATE TABLE game (
 	gameId INT NOT NULL AUTO_INCREMENT,

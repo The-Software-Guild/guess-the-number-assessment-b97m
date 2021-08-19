@@ -33,17 +33,19 @@ public interface GameDao {
     public Optional<Game> getGameById(int id);
     
     /**
-     * Attempts to inserts a game into the collection of stored games
+     * Inserts a game into the collection of stored games.
      * 
-     * If the insertion succeeds, then an instance containing the
-     * inserted game with its set id is included
+     * If the game is null, a null result will be returned.
      * 
-     * Otherwise, an empty instance will be returned
+     * If the game's answer is null, a null result will still be returned.
+     * 
+     * Otherwise, the inserted game will be returned with its id updated
+     * appropriately, its progress set to true, and its round list emptied
      * 
      * @param gameToInsert
-     * @return The aforementioned instance
+     * @return The aforementioned game
      */
-    public Optional<Game> addGame(Game gameToInsert);
+    public Game addGame(Game gameToInsert);
 
     /**
      * Attempts to mark the game with the indicated id
@@ -54,4 +56,11 @@ public interface GameDao {
      * @return The aforementioned value
      */
     public boolean markGameFinished(int gameId);
+
+    /**
+     * Attempts to remove all games from the collection.
+     * The value returned depends on the success of the deletion.
+     * @return The aforementioned value
+     */
+    public boolean clearGames();
 }

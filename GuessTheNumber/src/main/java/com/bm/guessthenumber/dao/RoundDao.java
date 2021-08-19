@@ -19,9 +19,23 @@ public interface RoundDao {
      * 
      * Otherwise, an empty instance is returned.
      * 
+     * Some causes of failure will include the following:
+     * - The passed in Round was null
+     * - One of the Round's fields was null
+     * - There is no game associated with the id
+     * 
      * @param roundToInsert
      * @param gameId
      * @return The aforementioned instance
      */
     public Optional<Round> makeRoundForGameId(Round roundToInsert, int gameId);
+
+    /**
+     * Attempts to remove all rounds from the collection.
+     * 
+     * The value returned depends on the success of the deletion
+     * 
+     * @return The aforementioned values
+     */
+    public boolean clearRounds();
 }
