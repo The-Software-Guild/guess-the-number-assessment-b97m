@@ -60,6 +60,7 @@ public interface GameDao {
     /**
      * Attempts to remove all games from the collection.
      * The value returned depends on the success of the deletion.
+     * 
      * @return The aforementioned value
      */
     public boolean clearGames();

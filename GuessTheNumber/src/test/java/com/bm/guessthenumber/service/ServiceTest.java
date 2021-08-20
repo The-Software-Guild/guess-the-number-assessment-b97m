@@ -287,4 +287,29 @@ public class ServiceTest {
 	adjustedGame = service.adjustedVersionOfGame(finishedGame);
 	assertEquals(finishedGame, adjustedGame);
     }
+
+    @Test
+    public void testClearData() {
+	assertTrue(
+	    service.clearData(), 
+	    "Deletion should succeed when the collections are empty"
+	);
+
+	for (int i = 0; i < 10; i++) {
+	    service.generateGame();
+	}
+	Game generatedGame = service.getAllGames().get(0);
+
+	Round insertedRound = service.processGuess(
+	    generatedGame.getGameId(), 
+	    "1234"
+	).get();
+
+	assertTrue(
+	    service.clearData(), 
+	    "Deletion should succeed even when one game has a round"
+	);
+	assertTrue(service.getAllGames().isEmpty(), "There should be no games");
+
+    }
 }

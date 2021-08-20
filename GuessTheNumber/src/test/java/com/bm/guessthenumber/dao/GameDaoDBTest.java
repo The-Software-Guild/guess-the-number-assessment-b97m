@@ -159,12 +159,10 @@ public class GameDaoDBTest {
 	    .collect(Collectors.toList());
 
 	List<Game> gameListFromDao = gameDao.getAllGames();
-	gameListFromDao.forEach(game -> {
-	    assertTrue(
-		producedGames.contains(game), 
-		"This game should be contained"
-	    );
-	});
+	assertEquals(producedGames.size(), gameListFromDao.size());	
+	for (int i = 0; i < producedGames.size(); i++) {
+	    assertEquals(producedGames.get(i), gameListFromDao.get(i));
+	}
     }
 
     @Test

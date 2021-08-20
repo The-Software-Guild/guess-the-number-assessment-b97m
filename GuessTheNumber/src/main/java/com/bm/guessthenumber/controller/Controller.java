@@ -41,17 +41,20 @@ public class Controller {
     }
 
     @PostMapping("guess")
-    @ResponseStatus(HttpStatus.OK)
-    public Round makeGuess(@RequestBody Guess guess) {
+    public ResponseEntity makeGuess(@RequestBody Guess guess) {
     	Optional<Round> possRound = service.processGuess(
 	    guess.getGameId(), 
 	    guess.getGuess()
 	);
 
 	if (possRound.isPresent()) {
-	    return possRound.get();
+	    return new ResponseEntity(possRound.get(), HttpStatus.CREATED);
 	}
-	return null;
+	return new ResponseEntity(
+	    "Either the guess was null or too long, or the game id was of a "
+	    + "game that does not exist", 
+	    HttpStatus.BAD_REQUEST
+	);
     }
 
     @GetMapping("game")
@@ -75,6 +78,7 @@ public class Controller {
     }
 
     @GetMapping("rounds/{gameId}")
+    @ResponseStatus(HttpStatus.OK)
     public List<Round> getRoundsForGame(@PathVariable int gameId) {
 	return service.getRoundsByGameId(gameId);
     }

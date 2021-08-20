@@ -45,6 +45,8 @@
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-devtools</artifactId>
 	</dependency>
+
+	<!-- Testing libraries -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
